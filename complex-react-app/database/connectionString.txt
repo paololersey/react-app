@@ -1,0 +1,3 @@
+mongodb+srv://mainUser:mainUser@cluster0-c11ys.mongodb.net/database?retryWrites=true&w=majority
+
+https://cloud.mongodb.com/v2/5ef98aa8f1f3c3736d6803a9#clusters
