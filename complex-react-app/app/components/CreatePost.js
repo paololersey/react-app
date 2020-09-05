@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import Page from "./Page"
 import Axios from "axios"
 import { withRouter } from "react-router-dom"
+import DispatchContext from "../DispatchContext"
 
 function CreatePost(props) {
   const [title, setTitle] = useState()
   const [body, setBody] = useState()
+  // const { addFlashMessage } = useContext(ExampleContext)
+  const appDispatch = useContext(DispatchContext)
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -14,7 +17,10 @@ function CreatePost(props) {
       console.log("new post was created")
       // redirect to te new post url
       props.history.push(`/post/${response.data}`)
-      props.addFlashMessage("Great message")
+
+      //replace te following with the dispatch action
+      //props.addFlashMessage("Great message")
+      appDispatch({ type: "flashMessage" }, { value: "Great message!" })
     } catch (e) {
       console.log("new post wasn't created")
     }
