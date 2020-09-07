@@ -20,14 +20,13 @@ function HeaderLoggedOut(props) {
       })
       if (response.data) {
         // console.log(response.data)
-        localStorage.setItem("complexAppToken", response.data.token)
-        localStorage.setItem("complexAppUsername", response.data.username)
-        localStorage.setItem("complexAppAvatar", response.data.avatar)
+        // we don't work to localStorage anymore
 
         //props.setLoggedIn(true)
         //replace te following with the dispatch action
         //setLoggedIn(true)
-        appDispatch({ type: "login" })
+        // appDispatch({ type: "login" })
+        appDispatch({ type: "login", data: response.data })
       } else {
         console.log("incorrect username/password")
       }

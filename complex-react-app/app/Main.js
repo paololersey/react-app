@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react"
+import React, { useState, useReducer, useEffect } from "react"
 import { useImmerReducer } from "use-immer"
 import ReactDOM from "react-dom"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
@@ -26,6 +26,11 @@ function Main() {
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("complexAppToken")),
     flashMessages: [],
+    user: {
+      token: localStorage.getItem("complexAppToken"),
+      username: localStorage.getItem("complexAppUsername"),
+      avatar: localStorage.getItem("complexAppAvatar"),
+    },
   }
   // useReducer will call us a function with an initial state for every property. It returns then 2 things,
   // the new state and the dispatch. It is powerful since we can handle a combination of state and action we
@@ -34,6 +39,19 @@ function Main() {
   // const [state, dispatch] = useReducer(ourReducer, initialState)
   // immer gives us a copy of state, call draft
   const [state, dispatch] = useImmerReducer(ourReducer, initialState)
+  // anytime loggedIn changes, the  function body will run
+  useEffect(() => {
+    if (state.loggedIn) {
+      // save data to localStorage
+      localStorage.setItem("complexAppToken", state.user.token)
+      localStorage.setItem("complexAppUsername", state.user.username)
+      localStorage.setItem("complexAppAvatar", state.user.avatar)
+    } else {
+      localStorage.removeItem("complexAppToken")
+      localStorage.removeItem("complexAppUsername")
+      localStorage.removeItem("complexAppAvatar")
+    }
+  }, [state.loggedIn])
   // all logic in this function
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -41,6 +59,7 @@ function Main() {
         // return { loggedIn: true, flashMessages: state.flashMessages } // flashMessages we don't mutate directly the state
         // use immer with draft
         draft.loggedIn = true
+        draft.user = action.data
         return
       case "logout":
         // return { loggedIn: false, flashMessages: state.flashMessages }
