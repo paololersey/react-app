@@ -13,6 +13,7 @@ import Footer from "./components/Footer"
 import About from "./components/About"
 import Terms from "./components/Terms"
 import Home from "./components/Home"
+import Profile from "./components/Profile"
 import CreatePost from "./components/CreatePost"
 import ViewSinglePost from "./components/ViewSinglePost"
 import FlashMessages from "./components/FlashMessages"
@@ -98,6 +99,9 @@ function Main() {
           <Switch>
             <Route path="/" exact>
               {state.loggedIn ? <Home /> : <HomeGuest />}
+            </Route>
+            <Route path="/profile/:username" exact>
+              <Profile />
             </Route>
             <Route path="/create-post" exact>
               <CreatePost></CreatePost>
