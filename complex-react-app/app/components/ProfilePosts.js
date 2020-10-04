@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import Axios from "axios"
+import LoadingDotsIcon from "./LoadingDotsIcon"
 
 function ProfilePosts() {
   const [posts, setPosts] = useState([])
@@ -22,7 +23,7 @@ function ProfilePosts() {
   // we set the state of isLoading to true. Then the idea is that when the call to axios has finished,
   //it will be set to false
   const [isLoading, setIsLoading] = useState(true)
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <LoadingDotsIcon />
 
   return (
     <>
