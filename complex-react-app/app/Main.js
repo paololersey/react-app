@@ -22,6 +22,7 @@ import FlashMessages from "./components/FlashMessages"
 //import ExampleContext from "./ExampleContext"
 import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
+import EditPost from "./components/EditPost"
 
 function Main() {
   const initialState = {
@@ -111,6 +112,9 @@ function Main() {
             </Route>
             <Route path="/about-us" exact>
               <About></About>
+            </Route>
+            <Route path="/post/:id/edit" exact>
+              <EditPost />
             </Route>
             <Route path="/terms" exact>
               <Terms></Terms>
