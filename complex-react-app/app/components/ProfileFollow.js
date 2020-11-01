@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom"
 import LoadingDotsIcon from "./LoadingDotsIcon"
 import StateContext from "../StateContext"
 
-function ProfilePosts(props) {
+function ProfileFollow(props) {
   const appState = useContext(StateContext)
   const { username } = useParams()
   const [isLoading, setIsLoading] = useState(true)
@@ -12,10 +12,10 @@ function ProfilePosts(props) {
 
   useEffect(() => {
     const ourRequest = Axios.CancelToken.source()
-
+   
     async function fetchPosts() {
       try {
-        const response = await Axios.get(`/profile/${username}/posts`, { cancelToken: ourRequest.token })
+        const response = await Axios.get(`/profile/${username}/${props.action}`, { cancelToken: ourRequest.token })
         setPosts(response.data)
         setIsLoading(false)
       } catch (e) {
@@ -33,24 +33,28 @@ function ProfilePosts(props) {
   return (
     <div className="list-group">
       {posts.length > 0 &&
-        posts.map(post => {
-          const date = new Date(post.createdDate)
-          const dateFormatted = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`
-
+        posts.map((follower, index) => {
           return (
-            <Link key={post._id} to={`/post/${post._id}`} className="list-group-item list-group-item-action">
-              <img className="avatar-tiny" src={post.author.avatar} /> <strong>{post.title}</strong> <span className="text-muted small">on {dateFormatted} </span>
+            <Link key={index} to={`/profile/${follower.username}`} className="list-group-item list-group-item-action">
+              <img className="avatar-tiny" src={follower.avatar} /> {follower.username}
             </Link>
           )
         })}
-      {posts.length == 0 && appState.user.username == username && (
+      {posts.length == 0 && appState.user.username == username && <p className="lead text-muted text-center">You don&rsquo;t have any followers yet.</p>}
+      {posts.length == 0 && appState.user.username != username && (
         <p className="lead text-muted text-center">
-          You haven&rsquo;t created any posts yet; <Link to="/create-post">create one now!</Link>
+          {username} doesn&rsquo;t have any followers yet.
+          {appState.loggedIn && " Be the first to follow them!"}
+          {!appState.loggedIn && (
+            <>
+              {" "}
+              If you want to follow them you need to <Link to="/">sign up</Link> for an account first.{" "}
+            </>
+          )}
         </p>
       )}
-      {posts.length == 0 && appState.user.username != username && <p className="lead text-muted text-center">{username} hasn&rsquo;t created any posts yet.</p>}
     </div>
   )
 }
 
-export default ProfilePosts
+export default ProfileFollow
