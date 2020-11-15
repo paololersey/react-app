@@ -29,7 +29,6 @@
     "socket.io-client": "^2.3.1",
     "use-immer": "^0.4.1",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
@@ -37,6 +36,7 @@
     "express": "^4.17.1",
     "fs-extra": "^9.0.1",
     "html-webpack-harddisk-plugin": "^1.0.2",
-    "html-webpack-plugin": "^4.5.0"
+    "html-webpack-plugin": "^4.5.0",
+    "webpack-cli": "^3.3.12"
   }
 }
